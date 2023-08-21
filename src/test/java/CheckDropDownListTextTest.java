@@ -4,7 +4,6 @@ import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 import static org.hamcrest.CoreMatchers.containsString;
 
@@ -14,8 +13,8 @@ public class CheckDropDownListTextTest {
     private final String faqLocatorButton;
     private final String faqLocatorActualText;
     private final String name;
-    private static final String URL = "https://qa-scooter.praktikum-services.ru";
-    private static WebDriver driver;
+    //private final String URL = "https://qa-scooter.praktikum-services.ru";
+    private WebDriver driver;
 
     public CheckDropDownListTextTest(String name, String locatorButton, String expectedText,
                                      String locatorActualText) {
@@ -39,17 +38,12 @@ public class CheckDropDownListTextTest {
         };
     }
 
-    @BeforeClass
-    public static void setUp() {
-        //драйвер для браузера Chrome
-        System.setProperty("webdriver.chrome.driver", "drivers/chromedriver");
-        driver = new ChromeDriver();
-        //переход на страницу тестового приложения
-        driver.get(URL);
-    }
+    @Rule
+    public DriverRule rule = new DriverRule();
 
     @Test
     public void checkTextInDropDownList() {
+        WebDriver driver = rule.getDriver();
         // создание объекта класса домашней страницы
         HomePageScooter objHomePageScooter = new HomePageScooter(driver);
 
@@ -67,10 +61,4 @@ public class CheckDropDownListTextTest {
                 (objHomePageScooter.getLocatorActualText(faqLocatorActualText)).getText(), containsString(expectedText));
     }
 
-
-    @AfterClass
-    public static void tearDown() {
-        // Закрытие браузера
-        driver.quit();
-    }
 }

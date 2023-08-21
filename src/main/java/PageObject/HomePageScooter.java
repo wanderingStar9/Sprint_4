@@ -18,8 +18,7 @@ public class HomePageScooter {
     // Кнопка "Статус заказа"
     private By orderStatusButton = By.className("Header_Link__1TAG7");
     // Кнопка "Заказать" внизу страницы
-    private By orderButtonMiddle = By.xpath(".//button[@class=" +
-            "'Button_Button__ra12g Button_Middle__1CSJM' and (text() = 'Заказать')]");
+    private By orderButtonMiddle = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM' and (text() = 'Заказать')]");
     // Заголовок раздела "Вопросы о важном"
     private By faqHeader = By.className("Home_SubHeader__zwi_E");
     // Выпадающий список в разделе «Вопросы о важном»
@@ -56,6 +55,18 @@ public class HomePageScooter {
         WebElement element = driver.findElement(orderButtonMiddle);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
         element.click();
+    }
+
+    // общий метод для нажатия кнопки "Заказать"
+
+    public void clickOrderButton(boolean flag) {
+        if (flag) {
+            driver.findElement(orderButtonTop).click();
+        } else {
+            WebElement element = driver.findElement(orderButtonMiddle);
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
+            element.click();
+        }
     }
 
     // метод нажатия на кнопку "Статус заказа"
